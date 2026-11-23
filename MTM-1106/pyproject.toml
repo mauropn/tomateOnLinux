@@ -7,7 +7,7 @@ name = "tomate"
 version = "0.1.0"
 description = "Driver userspace e app de configuração para a mesa TOMATE MTM-1106 (08f2:6811)"
 requires-python = ">=3.11"
-license = "MIT"
+license = {text = "MIT"}
 dependencies = ["jeepney>=0.8"]
 
 [project.optional-dependencies]
