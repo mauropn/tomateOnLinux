@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+user_units() {  # $1 = ação (start, restart, stop) para cada usuário com sessão ativa
+    for uid in $(loginctl list-users --no-legend 2>/dev/null | awk '{print $1}'); do
+        u=$(id -nu "$uid" 2>/dev/null) || continue
+        systemctl --user -M "$u@" daemon-reload >/dev/null 2>&1 || true
+        systemctl --user -M "$u@" "$1" tomate-daemon.service >/dev/null 2>&1 || true
+    done
+}
+if [ "$1" = "configure" ]; then
+    udevadm control --reload-rules || true
+    udevadm trigger --subsystem-match=hidraw --subsystem-match=input --subsystem-match=misc || true
+    systemctl --global enable tomate-daemon.service >/dev/null 2>&1 || true
+    user_units restart
+    echo "tomate-mtm1106: instalado. Desconecte e reconecte a mesa; abra \"Mesa TOMATE\" no menu."
+fi
+exit 0

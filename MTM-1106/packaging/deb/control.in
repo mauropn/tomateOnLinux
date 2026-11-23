@@ -1,0 +1,15 @@
+Package: tomate-mtm1106
+Version: @VERSION@
+Architecture: all
+Maintainer: Mauro Pena <901226+mauropn@users.noreply.github.com>
+Section: utils
+Priority: optional
+Depends: python3 (>= 3.11), python3-jeepney, python3-pyside6.qtcore, python3-pyside6.qtgui, python3-pyside6.qtwidgets, python3-pyside6.qtnetwork, systemd, udev
+Homepage: https://github.com/mauropn/tomateOnLinux
+Description: driver e app de configuração para a mesa TOMATE MTM-1106
+ Driver em userspace (hidraw + uinput) para a mesa digitalizadora
+ TOMATE MTM-1106 (USB 08f2:6811): caneta com pressão e inclinação,
+ mapeamento para um ou vários monitores, botões configuráveis e
+ teclas multimídia. Inclui o aplicativo gráfico "Mesa TOMATE".
+ .
+ Feito por engenharia reversa; não contém código do fabricante.

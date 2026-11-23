@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+    udevadm control --reload-rules >/dev/null 2>&1 || true
+    echo "tomate-mtm1106: removido. Desconecte e reconecte a mesa. A configuração em ~/.config/tomate foi mantida."
+fi
+exit 0

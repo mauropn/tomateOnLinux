@@ -14,7 +14,7 @@ O fabricante só oferece driver para Windows. Este projeto foi feito por engenha
 - **Teclas multimídia** impressas na mesa (volume, tocar/pausar etc.).
 - **Conexão a quente**: pode desconectar e reconectar a mesa, em qualquer porta USB, sem reiniciar nada.
 
-Ainda não funciona: os **botões laterais da caneta** (a mesa não envia sinal deles no modo usado). Veja [`docs/STATUS.md`](docs/STATUS.md).
+Ainda não funciona: os **botões laterais da caneta** (a mesa não envia sinal deles no modo usado). O que vem por aí está no [roadmap](ROADMAP.md).
 
 ## Requisitos
 - Linux com systemd e Python 3.11 ou mais novo.
@@ -93,6 +93,7 @@ systemctl --user stop tomate-daemon
 .venv/bin/python -m tomate.daemon -v    # daemon em primeiro plano, com log detalhado
 python3 re/tools/hidprobe.py listen 20  # ver os reports brutos da mesa
 sudo bash scripts/setup-dev.sh          # opcional: ferramentas de engenharia reversa e captura USB
+bash scripts/build-deb.sh               # gera o pacote .deb em dist/ (em teste)
 ```
 
 | Caminho | Conteúdo |

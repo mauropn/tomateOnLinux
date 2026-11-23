@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Mesa TOMATE
+Comment=Configurar a mesa digitalizadora TOMATE MTM-1106
+Exec=/usr/bin/tomate-gui
+Icon=input-tablet
+Categories=Settings;HardwareSettings;
+Keywords=tablet;mesa;caneta;pen;

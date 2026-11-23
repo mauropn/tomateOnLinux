@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+if [ "$1" = "remove" ]; then
+    for uid in $(loginctl list-users --no-legend 2>/dev/null | awk '{print $1}'); do
+        u=$(id -nu "$uid" 2>/dev/null) || continue
+        systemctl --user -M "$u@" stop tomate-daemon.service >/dev/null 2>&1 || true
+    done
+    systemctl --global disable tomate-daemon.service >/dev/null 2>&1 || true
+fi
+exit 0

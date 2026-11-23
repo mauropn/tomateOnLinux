@@ -1,0 +1,12 @@
+[Unit]
+Description=Driver userspace da mesa TOMATE MTM-1106
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+ExecStart=/usr/bin/tomate-daemon
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=graphical-session.target
