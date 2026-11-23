@@ -1,0 +1,18 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.pytest_cache/
+build/
+dist/
+
+# Material do fabricante: NUNCA versionar (driver extraído, pseudocódigo, evidências do REA)
+**/re/inputs/driver/
+**/re/decompiled/
+**/re/evidence/
+**/re/snapshots/
+*.exe
+*.dll
+*.sys
+*.iso

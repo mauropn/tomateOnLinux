@@ -1,0 +1,4 @@
+# TOMATE MTM-1106 (SZ PENG YI LTD. [T501], 08f2:6811)
+SUBSYSTEM=="hidraw", ATTRS{idVendor}=="08f2", ATTRS{idProduct}=="6811", TAG+="uaccess"
+SUBSYSTEM=="input",  ATTRS{idVendor}=="08f2", ATTRS{idProduct}=="6811", TAG+="uaccess"
+KERNEL=="uinput", SUBSYSTEM=="misc", TAG+="uaccess", OPTIONS+="static_node=uinput"
