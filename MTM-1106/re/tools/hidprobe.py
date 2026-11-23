@@ -5,6 +5,7 @@ Uso:
   hidprobe.py info                 lista hidraw da mesa
   hidprobe.py getfeature N ID LEN  HIDIOCGFEATURE no hidrawN
   hidprobe.py listen SECS          mostra reports de todas as hidraw da mesa
+  hidprobe.py pen                  caneta ao vivo numa linha (X, Y, pressão, inclinação); Ctrl+C sai
 """
 import fcntl
 import glob
@@ -61,6 +62,32 @@ def listen(secs):
                 last[fd] = data
 
 
+def pen():
+    """Mostra a caneta (report 9 ou 5) numa linha que se atualiza. Só leitura."""
+    fds = [os.open(dev, os.O_RDONLY) for dev, _ in tablet_hidraws()]
+    s8 = lambda v: v - 256 if v > 127 else v
+    print("Ctrl+C para sair. Inclinação: TX = esquerda(-)/direita(+), TY = cima(-)/baixo(+) (a confirmar)")
+    try:
+        while True:
+            r, _, _ = select.select(fds, [], [], 1)
+            for fd in r:
+                d = os.read(fd, 64)
+                if d[:1] == b"\x09" and len(d) >= 10:
+                    x, y, p = (int.from_bytes(d[i:i + 2], "little") for i in (2, 4, 6))
+                    tx, ty, pmax = s8(d[8]), s8(d[9]), 16383
+                elif d[:1] == b"\x05" and len(d) >= 8:
+                    x, y, p = (int.from_bytes(d[i:i + 2], "little") for i in (2, 4, 6))
+                    tx = ty = 0
+                    pmax = 2047
+                else:
+                    continue
+                st = "toca" if d[1] & 1 else ("perto" if d[1] & 0x40 else "longe")
+                print(f"\r{st:5s} X={x:5d} Y={y:5d} P={p:5d} ({100 * p // pmax:3d}%) TX={tx:+4d} TY={ty:+4d}   ",
+                      end="", flush=True)
+    except KeyboardInterrupt:
+        print()
+
+
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else "info"
     if cmd == "info":
@@ -85,6 +112,8 @@ def main():
             os.close(fd)
     elif cmd == "listen":
         listen(float(sys.argv[2]))
+    elif cmd == "pen":
+        pen()
 
 
 if __name__ == "__main__":
