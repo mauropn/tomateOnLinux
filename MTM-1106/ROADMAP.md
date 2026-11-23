@@ -32,7 +32,8 @@ Legenda: ✅ feito · 🔧 em andamento · ⬜ a fazer · 🙋 bom para quem que
 - ⬜ **Inclinação na aba Teste** da GUI.
 
 ## ⬜ v0.3: uso no dia a dia
-- 🔧 **Mesa inteira em um monitor só**: o mapeamento existe (aba Monitores → um monitor específico, e a ação "alternar monitor" num botão), mas falta testar com o notebook e com o monitor externo.
+- ✅ **Mesa inteira em um monitor só** (aba Monitores → um monitor específico): testado e funcionando.
+- ⬜ Testar a ação "alternar monitor" num botão da mesa.
 - ⬜ **Suspender e retomar**: confirmar que a mesa volta inicializada, com o modo e a área. Se não voltar, reenviar os comandos ao acordar.
 - ⬜ **Rótulos dos botões na GUI** na ordem física da mesa: B1, B2, B3, B4, B6, B5, roda↑, B7, B8, roda↓, B9, B10.
 - ⬜ Mostrar na GUI se a mesa está conectada e se o daemon está rodando.

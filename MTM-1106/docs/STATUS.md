@@ -38,7 +38,7 @@
 ## Próximos passos
 1. **Testar com uso real**:
    - [x] O cursor segue a caneta (com o alvo "todos").
-   - [ ] Mapeamento com o alvo "LG" ou "eDP".
+   - [x] Mapeamento com o alvo de um monitor só: testado pelo usuário em 2026-11-22, funcionando.
    - [ ] Pressão e inclinação no Krita/GIMP.
    - [x] Ícones multimídia impressos na mesa (volume, play): funcionando.
    - [x] Cursor fantasma parado: era o nó do kernel da mesa preso em "caneta próxima" quando o daemon o capturava. Corrigido: antes do grab e depois do ungrab, o daemon lê o estado com EVIOCGKEY e injeta a liberação (`kernel.evdev_release_keys`). Leitura do estado validada; o fantasma não voltou.
