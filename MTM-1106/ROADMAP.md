@@ -32,8 +32,7 @@ Legenda: ✅ feito · 🔧 em andamento · ⬜ a fazer · 🙋 bom para quem que
 - ⬜ **Inclinação na aba Teste** da GUI.
 
 ## ⬜ v0.3: uso no dia a dia
-- ⬜ Testar o mapeamento para um único monitor (notebook ou externo).
-- ⬜ Testar a ação "alternar monitor" num botão.
+- 🔧 **Mesa inteira em um monitor só**: o mapeamento existe (aba Monitores → um monitor específico, e a ação "alternar monitor" num botão), mas falta testar com o notebook e com o monitor externo.
 - ⬜ **Suspender e retomar**: confirmar que a mesa volta inicializada, com o modo e a área. Se não voltar, reenviar os comandos ao acordar.
 - ⬜ **Rótulos dos botões na GUI** na ordem física da mesa: B1, B2, B3, B4, B6, B5, roda↑, B7, B8, roda↓, B9, B10.
 - ⬜ Mostrar na GUI se a mesa está conectada e se o daemon está rodando.
@@ -42,6 +41,14 @@ Legenda: ✅ feito · 🔧 em andamento · ⬜ a fazer · 🙋 bom para quem que
   - ✅ `scripts/build-deb.sh` gera o `tomate-mtm1106_<versão>_all.deb`, com dependências pelo apt, regra udev, serviço `systemd --user` e atalho no menu;
   - ⬜ testar a instalação e a remoção numa máquina limpa;
   - ⬜ trocar a instalação por scripts pelo `.deb` como opção principal no README.
+
+## ⬜ Experiência do aplicativo
+- ⬜ **Escolha visual do monitor**: desenhar os monitores na posição real, como nas Configurações do GNOME. Um clique em um monitor faz a mesa inteira (100% da área) passar para ele; outra opção cobre todos.
+- ⬜ **Troca rápida de monitor** sem abrir a GUI: ícone na bandeja ou menu rápido com "Notebook / Monitor externo / Todos", além do botão da mesa.
+- ⬜ **Aviso na tela** ao trocar de monitor, por exemplo "Mesa → LG UltraWide", para saber para onde a caneta foi.
+- ⬜ **Lembrar a escolha por monitor**: ao conectar o monitor externo, voltar à última configuração usada com ele.
+- ⬜ Prévia na aba Área da mesa mostrando como a superfície fica mapeada no monitor escolhido, inclusive as bordas cortadas ao manter a proporção.
+- ⬜ Revisar textos e layout da GUI, e traduzir para inglês. 🙋
 
 ## ⬜ v0.4: distribuição
 - ⬜ Releases no GitHub, com o `.deb` anexado e notas de versão.
