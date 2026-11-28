@@ -40,8 +40,9 @@ Legenda: ✅ feito · 🔧 em andamento · ⬜ a fazer · 🙋 bom para quem que
 - ⬜ **Perfis por aplicativo**, por exemplo atalhos diferentes no Krita e no GIMP.
 - 🔧 **Pacote `.deb`** (instalação e remoção pelo apt):
   - ✅ `scripts/build-deb.sh` gera o `tomate-mtm1106_<versão>_all.deb`, com dependências pelo apt, regra udev, serviço `systemd --user` e atalho no menu;
+  - ✅ instalação testada no Ubuntu 26.04 (máquina de desenvolvimento, migrando da instalação por scripts);
   - ⬜ testar a instalação e a remoção numa máquina limpa;
-  - ⬜ trocar a instalação por scripts pelo `.deb` como opção principal no README.
+  - ✅ `.deb` como opção principal no README; scripts ficam como instalação a partir do código.
 
 ## ⬜ Experiência do aplicativo
 - ⬜ **Escolha visual do monitor**: desenhar os monitores na posição real, como nas Configurações do GNOME. Um clique em um monitor faz a mesa inteira (100% da área) passar para ele; outra opção cobre todos.
@@ -52,7 +53,7 @@ Legenda: ✅ feito · 🔧 em andamento · ⬜ a fazer · 🙋 bom para quem que
 - ⬜ Revisar textos e layout da GUI, e traduzir para inglês. 🙋
 
 ## ⬜ v0.4: distribuição
-- ⬜ Releases no GitHub, com o `.deb` anexado e notas de versão.
+- 🔧 Releases no GitHub, com o `.deb` anexado e notas de versão: ✅ v0.1.0 publicada.
 - ⬜ Testar em outros ambientes 🙋:
   - KDE Plasma no Wayland: os monitores precisam de outra fonte além do Mutter;
   - X11;

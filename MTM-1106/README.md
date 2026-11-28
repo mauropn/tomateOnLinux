@@ -19,9 +19,32 @@ Ainda não funciona: os **botões laterais da caneta** (a mesa não envia sinal 
 ## Requisitos
 - Linux com systemd e Python 3.11 ou mais novo.
 - Testado no **Ubuntu 26.04 com GNOME (Wayland)**. Em X11, os monitores são detectados pelo `xrandr`, mas esse caminho foi menos testado.
-- Os scripts de instalação usam `apt` (Ubuntu/Debian). Em outras distribuições, instale o `python3-venv` equivalente e copie `packaging/70-tomate.rules` para `/etc/udev/rules.d/` à mão.
+- O pacote `.deb` serve para Ubuntu e Debian. Em outras distribuições, use a [instalação a partir do código](#instalação-a-partir-do-código).
 
 ## Instalação
+Baixe o `.deb` da [página de releases](https://github.com/mauropn/tomateOnLinux/releases/latest) e instale com o apt:
+
+```bash
+wget https://github.com/mauropn/tomateOnLinux/releases/download/v0.1.0/tomate-mtm1106_0.1.0_all.deb
+sudo apt install ./tomate-mtm1106_0.1.0_all.deb
+```
+
+Desconecte e reconecte a mesa. Pronto: o serviço `tomate-daemon` já está rodando, passa a iniciar sozinho a cada login, e o atalho **Mesa TOMATE** aparece no menu de aplicativos.
+
+O pacote instala:
+- o driver e o app em `/usr/bin` e `/usr/lib/python3/dist-packages/tomate`;
+- as dependências pelo apt (`python3-jeepney` e PySide6);
+- a regra udev, que dá ao usuário logado acesso à mesa e ao `/dev/uinput`;
+- o serviço `systemd --user`, ativado para todos os usuários;
+- o atalho no menu.
+
+Nada depende da pasta onde você baixou o arquivo: pode apagar o `.deb` depois de instalar.
+
+> **Já instalou pelos scripts antes?** Rode `bash scripts/uninstall-user.sh` na pasta do repositório antes de instalar o `.deb`. Senão, o serviço e o atalho da instalação antiga continuam valendo no lugar dos do pacote.
+
+### Instalação a partir do código
+Para desenvolver, ou em distribuições sem apt:
+
 ```bash
 git clone https://github.com/mauropn/tomateOnLinux.git
 cd tomateOnLinux/MTM-1106
@@ -31,18 +54,16 @@ sudo bash scripts/setup-system.sh   # uma vez: python3-venv e regra udev
 bash scripts/install-user.sh        # sem sudo: ambiente Python, serviço e atalho no menu
 ```
 
-Pronto: o serviço `tomate-daemon` já está rodando e passa a iniciar sozinho a cada login.
-
 O que cada script faz:
 - **`setup-system.sh`** (com sudo):
   - instala o `python3-venv`;
   - copia a regra udev, que dá ao usuário logado acesso à mesa e ao `/dev/uinput`.
 - **`install-user.sh`** (sem sudo):
-  - cria um ambiente Python em `.venv/` dentro da pasta e instala o projeto nele;
+  - cria um ambiente Python em `.venv/` dentro da pasta e instala o projeto nele em modo editável;
   - cria o serviço `systemd --user`;
   - cria o atalho **Mesa TOMATE** no menu de aplicativos.
 
-> A pasta onde você clonou o repositório passa a ser usada pelo serviço. Não a apague nem a mova depois de instalar. Se mover, rode o `install-user.sh` de novo.
+> Nesse modo o serviço roda o código direto da pasta do repositório: edições e trocas de branch valem no próximo reinício do daemon. Não apague nem mova a pasta depois de instalar. Se mover, rode o `install-user.sh` de novo.
 
 ## Uso
 Abra **Mesa TOMATE** no menu de aplicativos. As mudanças valem na hora, sem reiniciar nada.
@@ -63,15 +84,23 @@ A configuração fica em `~/.config/tomate/config.toml`.
 | Sintoma | O que fazer |
 |---|---|
 | A mesa não responde depois de instalar | Desconecte e reconecte a mesa. Confira o serviço: `systemctl --user status tomate-daemon` |
-| `Permission denied` em `/dev/hidraw*` ou `/dev/uinput` no log | A regra udev não foi aplicada: rode `sudo bash scripts/setup-system.sh`, reconecte a mesa e faça logout/login |
+| `Permission denied` em `/dev/hidraw*` ou `/dev/uinput` no log | A regra udev não foi aplicada: reconecte a mesa e faça logout/login. Na instalação a partir do código, rode antes `sudo bash scripts/setup-system.sh` |
+| O atalho sumiu ou o serviço falha com `status=203/EXEC` | Instalação a partir do código com a pasta movida ou apagada: rode `bash scripts/install-user.sh` de novo, ou passe para o `.deb` |
 | O cursor vai para o monitor errado | Escolha o monitor na aba Monitores ou use um botão com a ação "alternar monitor" |
 | Quero ver o que está acontecendo | `journalctl --user -u tomate-daemon -f` |
 
 ## Desinstalar
+Pacote `.deb`:
+```bash
+sudo apt remove tomate-mtm1106
+```
+
+Instalação a partir do código:
 ```bash
 bash scripts/uninstall-user.sh                  # remove o serviço e o atalho
 sudo rm /etc/udev/rules.d/70-tomate.rules       # opcional: remove a regra udev
 ```
+
 Depois, desconecte e reconecte a mesa. A configuração em `~/.config/tomate` é mantida; apague-a se quiser.
 
 ## Como funciona
@@ -93,7 +122,7 @@ systemctl --user stop tomate-daemon
 .venv/bin/python -m tomate.daemon -v    # daemon em primeiro plano, com log detalhado
 python3 re/tools/hidprobe.py listen 20  # ver os reports brutos da mesa
 sudo bash scripts/setup-dev.sh          # opcional: ferramentas de engenharia reversa e captura USB
-bash scripts/build-deb.sh               # gera o pacote .deb em dist/ (em teste)
+bash scripts/build-deb.sh               # gera o pacote .deb em dist/
 ```
 
 | Caminho | Conteúdo |
